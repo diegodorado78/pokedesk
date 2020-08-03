@@ -87,18 +87,26 @@
             <p>Pokémon and Pokémon character names are trademarks of Nintendo.</p>
         </div>
     <script>
-    let busqueda = document.querySelector('#search')
-    window.btn.addEventListener('click',init)
- async function getPokemon(id) {
+    var busqueda = document.querySelector('#search')
+    window.btn.addEventListener('click',init) //window.btn un query traido sin el selector
+
+    async function getPokemon(id) {
      // USO ` LITERAL` para interpolar  variables usando ${}
      const api = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
      const apiJson=  await api.json(); 
      return apiJson
     }
+
      async function init(){
-     const chosenPokemon =  await getPokemon(busqueda.value)// window.search.value
-     window.nombre.textContent= chosenPokemon.name
-     window.imagen.setAttribute('src',chosenPokemon.sprites.front_default)
+        var busqueda2= busqueda.value;// extraigo la cadena del objeto busqueda
+        var busqueda3 = busqueda2.toLowerCase()//convierto en minus para la comparacion
+     try {
+        const chosenPokemon =  await getPokemon(busqueda3)// let busqueda es igual a window.search.value
+        window.nombre.textContent= chosenPokemon.name
+        window.imagen.setAttribute('src',chosenPokemon.sprites.front_default)
+     } catch (error) {
+       window.nombre.textContent= 'Ingrese nombre o id válido'
+     }
     }
     </script>
 </body>
