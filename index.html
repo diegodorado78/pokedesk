@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+</head>
+<style>
+    @font-face {
+            font-family: pokemon;
+            src: url('assets/PokemonGb-RAeo.ttf');
+        }
+    body{
+        display: flex;
+        flex-flow: column;
+        clear:both;
+        box-sizing: border-box;
+        font-size:  30px;
+        background: #20262E;
+        color:  white;
+        font-family: sans-serif;
+        text-align: center;
+            }
+    .cuadrado{
+        background: #DDDDDD;
+        padding: 3%;
+        margin: 5%;
+        border: 1px solid black;
+        border-radius: 15px;
+
+    }
+    .contenedor{
+        text-align: center;
+        background: rgb(226, 12, 12);
+        width: 40vw;
+        margin: auto 30vw;
+        border-radius: 5px;
+        padding: 2% 0px;
+        font-family: pokemon, sans-serif;
+    }
+    .contenedor input{
+        border-radius: 5px;
+    }
+    #nombre:first-letter{ /* uso la seudoclase para alterar el nombre*/
+        text-transform: uppercase;
+    }
+    #poke{
+        background: white;
+        width: 100%;
+        border: 1px solid black;
+
+    }
+    .contenedor input, label{
+        font-family: sans-serif;
+        font-weight: lighter;
+        font-size: 0.6em;
+    }
+    .contenedor p{
+        font-family: sans-serif;
+        font-weight: lighter;
+        font-size: 0.4em;
+    }
+</style>
+<body>
+    <h1> Diego's Pokédex</h1>
+        <div class="contenedor">
+            <h3 id="nombre"></h3>
+            <div class="cuadrado">
+        <div id="poke">
+            <img  id="imagen" src="./assets/pokeball.png" width="40%">
+        </div>
+            </div>
+            <label for="search">Escribe el nombre o número del pokemon</label><br>
+            <input id="search" type="text" placeholder="type name or # ">
+            <input id="btn" type="submit" value="Go"><br>
+            <p>Pokémon and Pokémon character names are trademarks of Nintendo.</p>
+        </div>
+    <script>
+    let busqueda = document.querySelector('#search')
+    window.btn.addEventListener('click',init)
+ async function getPokemon(id) {
+     // USO ` LITERAL` para interpolar  variables usando ${}
+     const api = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
+     const apiJson=  await api.json(); 
+     return apiJson
+    }
+     async function init(){
+     const chosenPokemon =  await getPokemon(busqueda.value)// window.search.value
+     window.nombre.textContent= chosenPokemon.name
+     window.imagen.setAttribute('src',chosenPokemon.sprites.front_default)
+    }
+    </script>
+</body>
+</html>
